@@ -1,0 +1,1 @@
+This will be a simple test for me to try and built a basic transformer model that can train on a script and then generate more in a simular fashion and style of the original script. Mostly this is a learning experiance to understand and learn about transformers, PyTorch and Python.
