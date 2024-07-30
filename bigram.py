@@ -37,7 +37,7 @@ val_data = data[n:]
 def get_batch(split):
     #generate small batch of inputs and targets
     data = train_data if split == 'train' else val_data
-    ix = torch.randint(0, data.size(0) - block_size, (batch_size,))
+    ix = torch.randint(len(data) - block_size, (batch_size,))
     x = torch.stack([data[i:i+block_size] for i in ix])
     y = torch.stack([data[i+1:i+block_size+1] for i in ix])
     x, y = x.to(device), y.to(device)
@@ -50,8 +50,8 @@ def estimate_loss():
     for split in ['train', 'val']:
         losses = torch.zeros(eval_iters)
         for k in range(eval_iters):
-            x, y = get_batch(split)
-            logits = model(x, y)
+            X, Y = get_batch(split)
+            logits, loss = model(X, Y)
             losses[k] = loss.item()
         out[split] = losses.mean()
     model.train()
@@ -62,11 +62,11 @@ class BigramLanguageModel(nn.Module):
         super().__init__()
         self.token_embedding_table = nn.Embedding(vocab_size, vocab_size)
 
-    def forward(self, idx, tragets=None):
+    def forward(self, idx, targets=None):
         logits = self.token_embedding_table(idx) # (B, T, C)
 
-        if tragets is None:
-            loss= None
+        if targets is None:
+            loss = None
         else:
             B, T, C = logits.shape
             logits = logits.view(B*T, C)
