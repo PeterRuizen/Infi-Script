@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 # hyperparameters
-batch_size = 64 #sequences in parallel
+batch_size = 32 #sequences in parallel
 block_size = 256 #mamximum context length for prediction
 max_iters = 5000
 eval_interval = 500 
@@ -11,9 +11,9 @@ learning_rate = 3e-4
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 eval_iters = 200
 n_embed = 384
-n_head = 6
-n_layer = 6
-dropout = 0.2
+n_head = 4
+n_layer = 4
+dropout = 0.5
 
 torch.manual_seed(42069)
 
