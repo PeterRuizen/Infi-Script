@@ -13,7 +13,7 @@ eval_iters = 200
 n_embed = 384
 n_head = 4
 n_layer = 4
-dropout = 0.5
+dropout = 0.7
 
 torch.manual_seed(42069)
 
@@ -190,3 +190,4 @@ for iter in range(max_iters):
 
 context = torch.zeros((1,1), dtype=torch.long, device=device)
 print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
+open('more.txt', 'w').write(decode(m.generate(context, max_new_tokens=10000)[0].tolist()))
